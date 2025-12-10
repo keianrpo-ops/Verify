@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certificados 2025</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Librerías para PDF (desde CDN, no hay que instalar nada) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+
+    <!-- LOGIN -->
+    <div id="login-screen" class="login-screen">
+      <div class="login-card">
+        <div class="login-logo">Certificados 2025</div>
+        <h2 class="login-title">Iniciar sesión</h2>
+        <p class="login-subtitle">Ingresa tus credenciales para acceder al panel.</p>
+
+        <label class="field-label" for="email">Correo electrónico</label>
+        <input id="email" type="email" class="input" placeholder="ejemplo@correo.com" />
+
+        <label class="field-label" for="password">Contraseña</label>
+        <input id="password" type="password" class="input" placeholder="••••••••" />
+
+        <button id="login-btn" class="btn-primary">Acceder</button>
+
+        <p class="login-hint">
+          * Por ahora, cualquier correo y contraseña no vacíos te permiten entrar.
+        </p>
+      </div>
+    </div>
+
+    <!-- APP -->
+    <div id="main-layout" class="main-layout hidden">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <span class="topbar-logo">Certificados 2025</span>
+          <span class="topbar-tag">Gestor de Certificados</span>
+        </div>
+        <div class="topbar-right">
+          <span class="topbar-user">Usuario: <strong>Administrador</strong></span>
+          <button id="logout-btn" class="btn-ghost">Cerrar sesión</button>
+        </div>
+      </header>
+
+      <!-- Layout -->
+      <div class="layout-body">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <div class="sidebar-section">
+            <p class="sidebar-title">Navegación</p>
+            <button class="sidebar-link active" data-view="dashboard">📄 Panel de certificados</button>
+            <button class="sidebar-link" data-view="history">🕒 Historial</button>
+            <button class="sidebar-link" data-view="settings">⚙️ Configuración</button>
+          </div>
+
+          <div class="sidebar-section">
+            <p class="sidebar-title">Ayuda</p>
+            <button class="sidebar-link" data-view="help">❓ Soporte</button>
+          </div>
+        </aside>
+
+        <!-- Contenido -->
+        <main class="content">
+
+          <!-- Dashboard -->
+          <section id="view-dashboard" class="view view-active">
+            <h1 class="view-title">Certificados disponibles</h1>
+            <p class="view-subtitle">
+              Selecciona el tipo de certificado que quieres generar. Después conectamos esto con tus plantillas reales.
+            </p>
+
+            <div class="cards-grid">
+              <article class="card" data-cert="ccc">
+                <h2 class="card-title">Cámara de Comercio</h2>
+                <p class="card-text">
+                  Generar certificado tipo Cámara de Comercio con los datos de tu formulario morado.
+                </p>
+                <button class="btn-secondary btn-generate" data-cert="ccc">
+                  Generar Certificado
+                </button>
+              </article>
+
+              <article class="card" data-cert="invima">
+                <h2 class="card-title">INVIMA</h2>
+                <p class="card-text">
+                  Plantilla oficial INVIMA lista para reemplazar solo los campos configurados.
+                </p>
+                <button class="btn-secondary btn-generate" data-cert="invima">
+                  Generar Certificado
+                </button>
+              </article>
+
+              <article class="card" data-cert="nif">
+                <h2 class="card-title">NIF</h2>
+                <p class="card-text">
+                  Certificado NIF con estructura bloqueada y solo campos editables necesarios.
+                </p>
+                <button class="btn-secondary btn-generate" data-cert="nif">
+                  Generar Certificado
+                </button>
+              </article>
+
+              <article class="card" data-cert="sri">
+                <h2 class="card-title">SRI</h2>
+                <p class="card-text">
+                  Certificado tributario SRI, listo para conectarse con tus datos.
+                </p>
+                <button class="btn-secondary btn-generate" data-cert="sri">
+                  Generar Certificado
+                </button>
+              </article>
+
+              <article class="card" data-cert="sunat">
+                <h2 class="card-title">SUNAT</h2>
+                <p class="card-text">
+                  Versión SUNAT alineada a tu base de datos de empresas y personas.
+                </p>
+                <button class="btn-secondary btn-generate" data-cert="sunat">
+                  Generar Certificado
+                </button>
+              </article>
+            </div>
+
+            <div id="log-area" class="log-area">
+              <p class="log-title">Registro de acciones</p>
+              <div id="log-messages" class="log-messages">
+                <p>Esperando acciones del usuario…</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Historial -->
+          <section id="view-history" class="view">
+            <h1 class="view-title">Historial de certificados</h1>
+            <p class="view-subtitle">
+              Aquí más adelante listaremos los certificados generados (fecha, tipo, usuario, etc.).
+            </p>
+            <div class="placeholder-box">
+              Próximamente: tabla con historial y botón para descargar cada certificado.
+            </div>
+          </section>
+
+          <!-- Configuración -->
+          <section id="view-settings" class="view">
+            <h1 class="view-title">Configuración</h1>
+            <p class="view-subtitle">
+              Aquí podremos conectar los campos del <strong>formulario morado</strong> con cada plantilla HTML.
+            </p>
+            <div class="placeholder-box">
+              Próximamente: mapeo de campos para cada certificado.
+            </div>
+          </section>
+
+          <!-- Ayuda -->
+          <section id="view-help" class="view">
+            <h1 class="view-title">Ayuda y soporte</h1>
+            <p class="view-subtitle">
+              Notas internas para tu equipo sobre cómo usar Certificados 2025.
+            </p>
+            <div class="placeholder-box">
+              Próximamente: guía rápida, video corto y FAQ.
+            </div>
+          </section>
+
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS principal -->
+  <script src="app.js"></script>
+</body>
+</html>
