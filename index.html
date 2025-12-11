@@ -5,23 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Certificados 2025</title>
 
-  <!-- Estilos -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Librerías para PDF (desde CDN, no hay que instalar nada) -->
+  <!-- Librerías para PDF (las usaremos más adelante) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
 <body>
   <div id="app">
-
     <!-- LOGIN -->
     <div id="login-screen" class="login-screen">
       <div class="login-card">
-        <div class="login-logo">Certificados 2025</div>
+        <div class="login-logo">CERTIFICADOS 2025</div>
         <h2 class="login-title">Iniciar sesión</h2>
-        <p class="login-subtitle">Ingresa tus credenciales para acceder al panel.</p>
+        <p class="login-subtitle">
+          Ingresa tus credenciales para acceder al panel.
+        </p>
 
         <label class="field-label" for="email">Correo electrónico</label>
         <input id="email" type="email" class="input" placeholder="ejemplo@correo.com" />
@@ -37,12 +37,12 @@
       </div>
     </div>
 
-    <!-- APP -->
+    <!-- APLICACIÓN -->
     <div id="main-layout" class="main-layout hidden">
-      <!-- Topbar -->
+      <!-- TOPBAR -->
       <header class="topbar">
         <div class="topbar-left">
-          <span class="topbar-logo">Certificados 2025</span>
+          <span class="topbar-logo">CERTIFICADOS 2025</span>
           <span class="topbar-tag">Gestor de Certificados</span>
         </div>
         <div class="topbar-right">
@@ -51,132 +51,145 @@
         </div>
       </header>
 
-      <!-- Layout -->
+      <!-- CUERPO -->
       <div class="layout-body">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-          <div class="sidebar-section">
-            <p class="sidebar-title">Navegación</p>
-            <button class="sidebar-link active" data-view="dashboard">📄 Panel de certificados</button>
-            <button class="sidebar-link" data-view="history">🕒 Historial</button>
-            <button class="sidebar-link" data-view="settings">⚙️ Configuración</button>
+        <!-- PANEL IZQUIERDO (flujo) -->
+        <aside class="flow-panel">
+          <!-- Paso 1: País -->
+          <div id="step-country" class="flow-step flow-step-active">
+            <h2 class="flow-title">Seleccione país</h2>
+            <button class="btn-menu btn-country" data-country="colombia">Colombia</button>
+            <button class="btn-menu btn-country" data-country="peru">Perú</button>
+            <button class="btn-menu btn-country" data-country="ecuador">Ecuador</button>
           </div>
 
-          <div class="sidebar-section">
-            <p class="sidebar-title">Ayuda</p>
-            <button class="sidebar-link" data-view="help">❓ Soporte</button>
+          <!-- Paso 2: Opciones Colombia -->
+          <div id="step-colombia" class="flow-step">
+            <button id="btn-volver" class="btn-menu btn-back">← Volver</button>
+            <p class="flow-subtitle">Opciones para Colombia</p>
+            <button id="btn-camara" class="btn-menu">Cámara de Comercio</button>
+            <button id="btn-sanidad" class="btn-menu">Sanidad</button>
           </div>
         </aside>
 
-        <!-- Contenido -->
+        <!-- PANEL PRINCIPAL -->
         <main class="content">
+          <!-- Mensaje inicial -->
+          <section id="view-start" class="view view-active">
+            <div class="center-msg">
+              <p>Seleccione un país y luego una opción del menú para comenzar.</p>
+            </div>
+          </section>
 
-          <!-- Dashboard -->
-          <section id="view-dashboard" class="view view-active">
-            <h1 class="view-title">Certificados disponibles</h1>
+          <!-- CÁMARA DE COMERCIO -->
+          <section id="view-ccc" class="view">
+            <h1 class="view-title">Cámara de Comercio – Colombia</h1>
             <p class="view-subtitle">
-              Selecciona el tipo de certificado que quieres generar. Después conectamos esto con tus plantillas reales.
+              Complete los datos exactamente como aparecen en el certificado de la Cámara de Comercio.
             </p>
 
-            <div class="cards-grid">
-              <article class="card" data-cert="ccc">
-                <h2 class="card-title">Cámara de Comercio</h2>
-                <p class="card-text">
-                  Generar certificado tipo Cámara de Comercio con los datos de tu formulario morado.
-                </p>
-                <button class="btn-secondary btn-generate" data-cert="ccc">
-                  Generar Certificado
-                </button>
-              </article>
+            <div class="form-page">
+              <!-- 1. Compañía -->
+              <div class="ccc-section">
+                <div class="ccc-section-header">1. Compañía</div>
+                <div class="ccc-section-body">
+                  <div class="ccc-row">
+                    <label for="razonSocial">Razón social:</label>
+                    <input id="razonSocial" class="input input-flat" type="text" placeholder="EMPRESA S.A.S." />
+                  </div>
+                  <div class="ccc-row">
+                    <label for="nit">NIT:</label>
+                    <input id="nit" class="input input-flat" type="text" placeholder="123.456.789-0" />
+                  </div>
+                  <div class="ccc-row">
+                    <label for="ciudad">Ciudad:</label>
+                    <input id="ciudad" class="input input-flat" type="text" placeholder="Medellín" />
+                  </div>
+                  <div class="ccc-row">
+                    <label for="representante">Representante legal:</label>
+                    <input id="representante" class="input input-flat" type="text" placeholder="Nombre completo" />
+                  </div>
+                  <div class="ccc-row">
+                    <label for="cedulaRep">Cédula representante:</label>
+                    <input id="cedulaRep" class="input input-flat" type="text" placeholder="CC 0.000.000" />
+                  </div>
+                </div>
+              </div>
 
-              <article class="card" data-cert="invima">
-                <h2 class="card-title">INVIMA</h2>
-                <p class="card-text">
-                  Plantilla oficial INVIMA lista para reemplazar solo los campos configurados.
-                </p>
-                <button class="btn-secondary btn-generate" data-cert="invima">
-                  Generar Certificado
-                </button>
-              </article>
+              <!-- 2. Matrícula -->
+              <div class="ccc-section">
+                <div class="ccc-section-header">2. Matrícula</div>
+                <div class="ccc-section-body">
+                  <div class="ccc-row">
+                    <label for="fecha">Fecha:</label>
+                    <input id="fecha" class="input input-flat" type="date" />
+                  </div>
+                  <div class="ccc-row">
+                    <label for="matricula">Número de matrícula:</label>
+                    <input id="matricula" class="input input-flat" type="text" placeholder="584726-16" />
+                  </div>
+                  <div class="ccc-row">
+                    <label for="grupoNiif">Grupo NIIF:</label>
+                    <input id="grupoNiif" class="input input-flat" type="text" placeholder="Grupo 3" />
+                  </div>
+                </div>
+              </div>
 
-              <article class="card" data-cert="nif">
-                <h2 class="card-title">NIF</h2>
-                <p class="card-text">
-                  Certificado NIF con estructura bloqueada y solo campos editables necesarios.
-                </p>
-                <button class="btn-secondary btn-generate" data-cert="nif">
-                  Generar Certificado
-                </button>
-              </article>
+              <!-- 3. Ubicación -->
+              <div class="ccc-section">
+                <div class="ccc-section-header">3. Ubicación</div>
+                <div class="ccc-section-body">
+                  <div class="ccc-row">
+                    <label for="domicilio">Domicilio principal:</label>
+                    <input id="domicilio" class="input input-flat" type="text" placeholder="Cra 00 # 00-00" />
+                  </div>
+                  <div class="ccc-row">
+                    <label for="departamento">Departamento:</label>
+                    <input id="departamento" class="input input-flat" type="text" placeholder="Antioquia" />
+                  </div>
+                  <div class="ccc-row">
+                    <label for="correo">Correo electrónico:</label>
+                    <input id="correo" class="input input-flat" type="email" placeholder="empresa@correo.com" />
+                  </div>
+                  <div class="ccc-row">
+                    <label for="telefono">Teléfono:</label>
+                    <input id="telefono" class="input input-flat" type="text" placeholder="+57 000 000 0000" />
+                  </div>
+                </div>
+              </div>
 
-              <article class="card" data-cert="sri">
-                <h2 class="card-title">SRI</h2>
-                <p class="card-text">
-                  Certificado tributario SRI, listo para conectarse con tus datos.
-                </p>
-                <button class="btn-secondary btn-generate" data-cert="sri">
-                  Generar Certificado
+              <div class="form-actions">
+                <button id="btn-ccc-cancel" class="btn-secondary">Cancelar</button>
+                <button id="btn-ccc-submit" class="btn-primary form-submit">
+                  Generar documento (simulado)
                 </button>
-              </article>
-
-              <article class="card" data-cert="sunat">
-                <h2 class="card-title">SUNAT</h2>
-                <p class="card-text">
-                  Versión SUNAT alineada a tu base de datos de empresas y personas.
-                </p>
-                <button class="btn-secondary btn-generate" data-cert="sunat">
-                  Generar Certificado
-                </button>
-              </article>
-            </div>
-
-            <div id="log-area" class="log-area">
-              <p class="log-title">Registro de acciones</p>
-              <div id="log-messages" class="log-messages">
-                <p>Esperando acciones del usuario…</p>
               </div>
             </div>
           </section>
 
-          <!-- Historial -->
-          <section id="view-history" class="view">
-            <h1 class="view-title">Historial de certificados</h1>
+          <!-- SANIDAD (placeholder por ahora) -->
+          <section id="view-sanidad" class="view">
+            <h1 class="view-title">Sanidad – Colombia</h1>
             <p class="view-subtitle">
-              Aquí más adelante listaremos los certificados generados (fecha, tipo, usuario, etc.).
+              Aquí más adelante agregaremos el formulario de Sanidad.
             </p>
             <div class="placeholder-box">
-              Próximamente: tabla con historial y botón para descargar cada certificado.
+              Próximamente: formulario de sanidad con sus campos específicos.
             </div>
           </section>
 
-          <!-- Configuración -->
-          <section id="view-settings" class="view">
-            <h1 class="view-title">Configuración</h1>
-            <p class="view-subtitle">
-              Aquí podremos conectar los campos del <strong>formulario morado</strong> con cada plantilla HTML.
-            </p>
-            <div class="placeholder-box">
-              Próximamente: mapeo de campos para cada certificado.
+          <!-- LOG GLOBAL -->
+          <div id="log-area" class="log-area">
+            <p class="log-title">Registro de acciones</p>
+            <div id="log-messages" class="log-messages">
+              <p>Esperando acciones del usuario…</p>
             </div>
-          </section>
-
-          <!-- Ayuda -->
-          <section id="view-help" class="view">
-            <h1 class="view-title">Ayuda y soporte</h1>
-            <p class="view-subtitle">
-              Notas internas para tu equipo sobre cómo usar Certificados 2025.
-            </p>
-            <div class="placeholder-box">
-              Próximamente: guía rápida, video corto y FAQ.
-            </div>
-          </section>
-
+          </div>
         </main>
       </div>
     </div>
   </div>
 
-  <!-- JS principal -->
   <script src="app.js"></script>
 </body>
 </html>
